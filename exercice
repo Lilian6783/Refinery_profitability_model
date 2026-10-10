@@ -1,20 +1,28 @@
 def decision_production_ho_rb(client):
     #Récupérer les information sur les 4 titres de la simulation
-    param_CL = {'ticker': 'CL'}
-    resp = client.get('/securities', params=param_CL).json()
+    param_cl = {'ticker': 'CL'}
+    resp = client.get('/securities', params=param_cl).json()
+    cl_last = resp[0].get('last')
     
-    param_RCA = {'ticker': 'RCA'}
-    resp = client.get('/securities', params=param_RCA).json()
+    param_rca = {'ticker': 'RCA'}
+    resp = client.get('/securities', params=param_rca).json()
+    rca_last = resp[0].get('last')
 
-    param_HO = {'ticker': 'HO'}
-    resp = client.get('/securities', params=param_HO).json()
+    param_ho = {'ticker': 'HO'}
+    resp = client.get('/securities', params=param_ho).json()
+    ho_last = resp[0].get('last')
 
-    param_RB = {'ticker': 'RB'}
-    resp = client.get('/securities', params=param_RB).json()
+    param_rb = {'ticker': 'RB'}
+    resp = client.get('/securities', params=param_rb).json()
+    rb_last = resp[0].get('last')
 
     #Faire les modèles pour les deux Raffineries
-    ProfitNR = 0
-    ProfitOR = 0
+
+    lease_priceNR = 90000
+    lease_priceOR = 180000
+
+    ProfitNR = 2 * last_ho + 2 * last_rb - 4 * last_cl - 4 * last_rca - lease_priceNR
+    ProfitOR = 4 * last_ho + 4 * last_rb - 8 * last_cl - 12 * last_rca - lease_priceOR
 
     #Céer la condition d'activation des rafineries et le message retourné
     if ProfitOR > 0:
