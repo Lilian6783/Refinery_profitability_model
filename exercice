@@ -1,6 +1,16 @@
 def decision_production_ho_rb(client):
     #Récupérer les information sur les 4 titres de la simulation
+    param_CL = {'ticker': 'CL'}
+    resp = client.get('/securities', params=param_CL).json()
+    
+    param_RCA = {'ticker': 'RCA'}
+    resp = client.get('/securities', params=param_RCA).json()
 
+    param_HO = {'ticker': 'HO'}
+    resp = client.get('/securities', params=param_HO).json()
+
+    param_RB = {'ticker': 'RB'}
+    resp = client.get('/securities', params=param_RB).json()
 
     #Faire les modèles pour les deux Raffineries
     ProfitNR = 0
