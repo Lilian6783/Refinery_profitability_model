@@ -1,0 +1,16 @@
+def decision_production_ho_rb(client):
+    #Récupérer les information sur les 4 titres de la simulation
+
+
+    #Faire les modèles pour les deux Raffineries
+    ProfitNR = 0
+    ProfitOR = 0
+
+    #Céer la condition d'activation des rafineries et le message retourné
+    if ProfitOR > 0:
+        Raf = 0
+    elif ProfitNR > 0:
+        Raf = 0
+    else:
+        Raf = 0
+    return Raf
