@@ -1,0 +1,31 @@
+import httpx
+import time
+import os
+import msvcrt
+
+from lib import *
+from exercice import *
+
+def main():
+    while True:
+        if os.name == 'nt':
+            if msvcrt.kbhit():
+                key = msvcrt.getch()
+                if key == b' ':
+                    break
+
+        production_ho_rb = decision_production_ho_rb(client)
+
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"production_ho_rb : {production_ho_rb}")
+        time.sleep(0.1)
+
+
+if __name__ == "__main__":
+    API_KEY = "3KOTDBQX"
+    API_PORT = 10000-1
+    url = f"http://localhost:{API_PORT}/v1"
+    params = {'key': API_KEY}
+
+    with httpx.Client(base_url=url, params=params) as client:
+        main()
