@@ -1,5 +1,5 @@
-def decision_production_ho_rb(client):
-    #Récupérer les information sur les 4 titres de la simulation
+def production_decision_ho_rb(client):
+    #Info query for all tickers
     param_cl = {'ticker': 'CL'}
     resp = client.get('/securities', params=param_cl).json()
     cl_last = resp[0].get('last')
@@ -16,8 +16,6 @@ def decision_production_ho_rb(client):
     resp = client.get('/securities', params=param_rb).json()
     rb_last = resp[0].get('last')
 
-    #Faire les modèles pour les deux Raffineries
-
     param_NR = {'ticker': 'N_REFINERY'}
     resp = client.get('/assets', params=param_rca).json()
     lease_priceNR = resp[0].get('lease_price')
@@ -25,11 +23,13 @@ def decision_production_ho_rb(client):
     param_NR = {'ticker': 'N_REFINERY'}
     resp = client.get('/assets', params=param_rca).json()
     lease_priceNR = resp[0].get('lease_price')
+
+    #Refinery models
 
     ProfitNR = 2 * last_ho + 2 * last_rb - 4 * last_cl - 4 * last_rca - lease_priceNR
     ProfitOR = 4 * last_ho + 4 * last_rb - 8 * last_cl - 12 * last_rca - lease_priceOR
 
-    #Céer la condition d'activation des rafineries et le message retourné
+    #Refinery activation condition + message
     if ProfitOR > 0:
         Raf = 0
     elif ProfitNR > 0:
