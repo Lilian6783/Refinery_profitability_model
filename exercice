@@ -17,12 +17,12 @@ def production_decision_ho_rb(client):
     rb_last = resp[0].get('last')
 
     param_NR = {'ticker': 'N_REFINERY'}
-    resp = client.get('/assets', params=param_rca).json()
+    resp = client.get('/assets', params=param_NR).json()
     lease_priceNR = resp[0].get('lease_price')
 
-    param_NR = {'ticker': 'N_REFINERY'}
-    resp = client.get('/assets', params=param_rca).json()
-    lease_priceNR = resp[0].get('lease_price')
+    param_OR = {'ticker': 'O_REFINERY'}
+    resp = client.get('/assets', params=param_OR).json()
+    lease_priceOR = resp[0].get('lease_price')
 
     #Refinery models
 
@@ -30,10 +30,10 @@ def production_decision_ho_rb(client):
     ProfitOR = 4 * last_ho + 4 * last_rb - 8 * last_cl - 12 * last_rca - lease_priceOR
 
     #Refinery activation condition + message
-    if ProfitOR > 0:
-        Raf = 0
-    elif ProfitNR > 0:
-        Raf = 0
+    if ProfitOR > ProfitNR:
+        OR_on = resp[2].get('start_period') 
+    elif ProfitNR > ProfitOR:
+        NR_on = resp[2].get('start_period')
     else:
         Raf = 0
     return Raf
