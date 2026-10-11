@@ -18,8 +18,13 @@ def decision_production_ho_rb(client):
 
     #Faire les modèles pour les deux Raffineries
 
-    lease_priceNR = 90000
-    lease_priceOR = 180000
+    param_NR = {'ticker': 'N_REFINERY'}
+    resp = client.get('/assets', params=param_rca).json()
+    lease_priceNR = resp[0].get('lease_price')
+
+    param_NR = {'ticker': 'N_REFINERY'}
+    resp = client.get('/assets', params=param_rca).json()
+    lease_priceNR = resp[0].get('lease_price')
 
     ProfitNR = 2 * last_ho + 2 * last_rb - 4 * last_cl - 4 * last_rca - lease_priceNR
     ProfitOR = 4 * last_ho + 4 * last_rb - 8 * last_cl - 12 * last_rca - lease_priceOR
