@@ -31,9 +31,31 @@ def production_decision_ho_rb(client):
 
     #Refinery activation condition + message
     if ProfitOR > ProfitNR:
-        OR_on = resp[2].get('start_period') 
+        param_OR = {'ticker': 'O_REFINERY'}
+        resp = client.get('/assets', params=param_OR).json()        
+        OR_on = resp[2].get('start_period')
+
+        param_NR = {'ticker': 'N_REFINERY'}
+        resp = client.get('/assets', params=param_NR).json()        
+        NR_off = resp[2].get('stop_period')
+        
+        print("The old refinery in on")
+        print("The new refinery is off")
+
     elif ProfitNR > ProfitOR:
+        param_NR = {'ticker': 'N_REFINERY'}
+        resp = client.get('/assets', params=param_NR).json()        
         NR_on = resp[2].get('start_period')
+
+        param_OR = {'ticker': 'O_REFINERY'}
+        resp = client.get('/assets', params=param_OR).json()        
+        OR_off = resp[2].get('stop_period')
+
+        print("The old refinery in on")
+        print("The new refinery is off")
+    
     else:
-        Raf = 0
+        NR_off = resp[2].get('stop_period')
+        OR_off = resp[2].get('stop_period')
+        print("No refinery is activated")
     return Raf
